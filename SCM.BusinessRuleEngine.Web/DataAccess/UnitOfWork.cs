@@ -58,5 +58,11 @@ namespace SCM.BusinessRuleEngine.Web.DataAccess
 
             this.disposed = true;
         }
+
+        private GenericRepository<Models.PackingSlip> _packingSlipRepository;
+
+        public GenericRepository<Models.PackingSlip> PackingSlipRepository => _packingSlipRepository ??
+                                                                  (_packingSlipRepository =
+                                                                      new GenericRepository<Models.PackingSlip>(dbContext));
     }
 }

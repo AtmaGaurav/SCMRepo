@@ -66,5 +66,10 @@ namespace SCM.BusinessRuleEngine.Web.DataAccess
             return await this.dbContext.Set<TEntity>().FirstOrDefaultAsync(predicate).ConfigureAwait(true);
         }
 
+        public virtual TEntity GetById(Expression<Func<TEntity, bool>> id)
+        {
+            return dbSet.FirstOrDefault(id);
+        }
+
     }
 }

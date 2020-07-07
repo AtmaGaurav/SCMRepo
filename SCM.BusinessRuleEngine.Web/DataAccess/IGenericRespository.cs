@@ -26,5 +26,7 @@ namespace SCM.BusinessRuleEngine.Web.DataAccess
 
         Task<IEnumerable<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includeProperties);
 
+        TEntity GetById(Expression<Func<TEntity, bool>> id);
+
     }
 }

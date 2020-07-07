@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SCM.BusinessRuleEngine.Web.DataAccess;
+using SCM.BusinessRuleEngine.Web.Service;
+using SCM.BusinessRuleEngine.Web.Service.Interface;
 
 namespace SCM.BusinessRuleEngine.Web
 {
@@ -37,8 +39,21 @@ namespace SCM.BusinessRuleEngine.Web
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("SCMBusinessEngineDb")));
-            //services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBusinessRuleEngineService, BusinessRuleEngineService>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    }
+                );
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +73,7 @@ namespace SCM.BusinessRuleEngine.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("CorsApi");
 
             app.UseAuthorization();
 

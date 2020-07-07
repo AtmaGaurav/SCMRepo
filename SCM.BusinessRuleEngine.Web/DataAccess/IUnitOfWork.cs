@@ -32,5 +32,7 @@
         /// Dispose method signature.
         /// </summary>
         void Dispose();
+
+        GenericRepository<Models.PackingSlip> PackingSlipRepository { get; }
     }
 }
