@@ -18,19 +18,29 @@ namespace SCM.BusinessRuleEngine.Web.Controllers
     {
         private readonly IBusinessRuleEngineService _businessRuleEngineService;
 
+        /// <summary>
+        /// constructor /dependency injection of Businessrule engine service interface
+        /// </summary>
+        /// <param name="businessRuleEngineService"></param>
         public PaymentActionController(IBusinessRuleEngineService businessRuleEngineService)
         {
             _businessRuleEngineService = businessRuleEngineService;
         }
 
+        /// <summary>
+        /// client/UI will call Execute Rule post call which in turn call the Execeute Action method 
+        /// </summary>
+        /// <param name="type">String value which accepts the Payment Type like "Book" or "Physcial Product" or "Membership" etc</param>
+        /// <returns></returns>
+        /// 
         [HttpPost]
         [Route("ExecuteRule")]
         public async Task<IActionResult> Post([FromBody] string type)
         {
             try
             {
-                PaymentForOrder foo = (PaymentForOrder)Enum.Parse(typeof(PaymentForOrder), type);
-                _businessRuleEngineService.ExecuteAction(foo);
+                PaymentForOrder paymentOrder = (PaymentForOrder)Enum.Parse(typeof(PaymentForOrder), type);
+                _businessRuleEngineService.ExecuteAction(paymentOrder);
                 return Ok();
             }
             catch (Exception ex)
